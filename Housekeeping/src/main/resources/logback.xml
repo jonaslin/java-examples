@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>logback</contextName>
+
+	<property name="logback.logdir" value="/opt/syslog" />
+	<property name="logback.logname" value="CathayHodingsTest" />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="cathayHodingsTestLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- File>${logback.logdir}/${logback.logname}.log</File -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>
+				${logback.logdir}/${logback.logname}.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="cathayHodingsTestLog" />
+	</root>
+
+	<logger name="org.hibernate" level="warn" />
+	<logger name="org.springframework" level="warn" />
+</configuration>
